@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FirstAndroidJavaCode</string>
+
+    <string-array name="myArray">
+    <item>Poodle</item>
+    <item>Labrador</item>
+    <item>Shar Pei</item>
+    <item>Newfoundland</item>
+
+    </string-array>
+</resources>
