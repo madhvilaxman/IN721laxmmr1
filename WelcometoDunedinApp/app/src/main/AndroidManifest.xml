@@ -15,10 +15,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ServicesActivity" />
-        <activity android:name=".FunThingsTodo" />
-        <activity android:name=".DiningActivity" />
-        <activity android:name=".Shopping"></activity>
+        <activity android:name=".ServicesActivity"
+                  android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".FunThingsTodo"
+                  android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".DiningActivity"
+                  android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".Shopping"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

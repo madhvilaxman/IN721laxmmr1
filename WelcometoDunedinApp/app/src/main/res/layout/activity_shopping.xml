@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="275dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/Mall"
+        android:background="@drawable/mall"
         />
 
 </RelativeLayout>
