@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity
     {
             String[] groups = {"Services", "Fun Things To Do", "Dining", "Shopping"};
             //An ArrayAdapter
-            ArrayAdapter<String> activitesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, groups);
+            ArrayAdapter<String> activitesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, groups);
             //ListView binded with the Adapter
             ListView activitiesGroupListView = (ListView) findViewById(R.id.listView);
             activitiesGroupListView.setAdapter(activitesAdapter);
@@ -44,16 +44,16 @@ public class MainActivity extends AppCompatActivity
 
             switch (clickedItemString)
             {
-                case "Services";
+                case "Services":
                     goToIntent = new Intent(MainActivity.this, ServicesActivity.class);
                     break;
-                case "Fun Things To Do";
+                case "Fun Things To Do":
                     goToIntent = new Intent(MainActivity.this, FunThingsTodo.class);
                     break;
-                case "Dining";
+                case "Dining":
                     goToIntent = new Intent(MainActivity.this, DiningActivity.class);
                     break;
-                case "Shopping";
+                case "Shopping":
                     goToIntent = new Intent(MainActivity.this, Shopping.class);
                     break;
                   default:
