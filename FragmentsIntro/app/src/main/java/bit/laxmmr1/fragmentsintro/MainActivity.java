@@ -21,11 +21,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //SetonClick Button Listner
+        //SetonClick Button Listener
         Button btnImageFragment = (Button) findViewById(R.id.btnShowImageFragment);
         btnImageFragment.setOnClickListener(btnImageFragment);
 
-        btnImageFragment.setOnClickListener(new View.onClickListener()
+        class BtnImageFragmentHandler implements View.onClickListener
         {
             @Override
             public void onClick(View v)
@@ -38,41 +38,6 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.fragment_container, dynamicFragment);
                 ft.commit();
             }//endonCLickView
-        });
+        });//EndOnClickListener
     }//End method on create
-
-    public class ShowImageFragment extends Fragment
-    {
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstancesState)
-        {
-            View fragmentView = inflater.inflate(R.layout.show_image_fragment,container,false);
-            return fragmentView;
-        }//End OnCreateView
-
-    }//EndofFragmentClass
-
-    public class ShowListViewFragment extends Fragment
-    {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            View fragmentView = inflater.inflate(R.layout.show_listview_fragment, container, false);
-
-            //1.Get a reference to the ListView with fragmentView.findViewById
-            ListView lvCities = (ListView) fragmentView.findViewById(R.id.lvcities);
-
-            //2.Get your array of strings
-            Resources resourceMachine = getResources();
-            String[] cityNamesArray = resourceMachine.getStringArray(R.array.city_names_array);
-
-            //3.Create the Adapter
-            ArrayAdapter<String>  cityNamesAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,cityNamesArray);
-
-            //4.Pass it to the setAdapter method of the ListView
-            lvCities.setAdapter(cityNamesAdapter);
-
-            //Return the fully configured View
-            return fragmentView;
-        }
-    }
 }
