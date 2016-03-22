@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#e9d9d9">
+
+   <Button
+       android:="@+id/btnNo"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
+       android:layout_alignParentTop="true"
+       android:layout_marginRight="40dp"
+       android:layout_marginTop="108dp"
+       android:text="NO"
+       android:id="@+id/button" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/musicnew"
+        android:layout_above="@+id/btnYes"
+        android:layout_alignRight="@+id/btnYes"
+        android:layout_alignEnd="@+id/btnYes"
+        android:layout_alignLeft="@+id/btnYes"
+        android:layout_alignStart="@+id/btnYes" />
+
+    <Button
+        android:id="@+id/btnYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:text="YES"
+        android:layout_marginStart="70dp"
+        android:layout_alignTop="@+id/button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
