@@ -9,12 +9,14 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnTeleport = (Button) findViewById(R.id.buttonTeleport);
         btnTeleport.setOnClickListener(new telePortClicker());
-    }  //End OnCreate
-        //============================================================================================
+    }//End OnCreate
+//============================================================================================================================================================================
         class telePortClicker implements View.OnClickListener{
             @Override
             public void onClick(View v)
@@ -56,13 +58,16 @@ public class MainActivity extends AppCompatActivity {
                 APIThread.execute();
             }
         }//End TeleportCLicker
-    //====================================================================================================
-        //HTTPUrlConnecton
+/*=========================================================================================================================================================================
+                //HTTP URL CONNECTION 1
+                ASYNC TASK AND HTTP CONNECTION
+==============================================================================================================================================================================*/
         class AsyncAPIShowRAWJSON extends AsyncTask<Void, Void,String>{
             @Override
             protected String doInBackground(Void... arg0)
             {
                 String JSONString = null;
+                String FlickrJSONString = null;
                 String geoPluginString = "No Place found";
 
                 double latitude = 0.00;
@@ -76,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 String urlString = "http://www.geoplugin.net/extras/location.gp?" +
                         "lat=" + latitude+
                         "&long="+ longitude + "&format=json";
-
-                //String urlFlickrString = "https://api.flickr.com/services/rest/?" +
-                        //"&format=json" +
-                       // "&api_key=eda41a123d459be0f85276d37290651e&tags=";
 
                 try {
                     //HttpURL Connection
@@ -113,18 +114,73 @@ public class MainActivity extends AppCompatActivity {
                 }//End while
                 globalLatitude = latitude;
                 globalLongitude = longitude;
+/*=========================================================================================================================================================================
+                //HTTP URL CONNECTION 2
+                GET IMAGE FROM FLICKR
+==============================================================================================================================================================================*/
+                String urlFlickrString = "https://api.flickr.com/services/rest/?format=json&nojsoncallback=1&method=flickr.photos.search&api_key=eda41a123d459be0f85276d37290651e&tags=";
+                urlFlickrString += geoPluginString;
+                try {
+                    //HttpURL Connection
+                    URL URLPhotoObject = new URL(urlFlickrString);
+                    HttpURLConnection connection = (HttpURLConnection) URLPhotoObject.openConnection();
+                    connection.connect();
 
+                    //Get inputStream
+                    InputStream inputStream1 = connection.getInputStream();
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream1);
+                    BufferedReader bufferedReader1 = new BufferedReader(inputStreamReader);
+
+                    //Reading the input
+                    String responseString;
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((responseString = bufferedReader1.readLine()) != null)
+                    {
+                        stringBuilder = stringBuilder.append(responseString);
+                    }//end While
+
+                    //Get the String from the String builder JSON String ready for parsing
+                    FlickrJSONString = stringBuilder.toString();
+
+                    //Get JSON OBJECT FROM THE FLICK JSON STRING
+                    //Convert to JSON
+                    JSONObject FlickrObject = new JSONObject(FlickrJSONString);
+                    JSONObject photosObject = FlickrObject.getJSONObject("photos");
+                    String totalResultsString = photosObject.getString("total");
+                    int totalResults = Integer.parseInt(totalResultsString);
+
+                    if (totalResults > 0)
+                    {
+                        JSONArray photoArray = photosObject.getJSONArray("photo");
+                        JSONObject firstPhotoObject = photoArray.getJSONObject(0);
+                        String farm = firstPhotoObject.getString("farm");
+                        String server = firstPhotoObject.getString("server");
+                        String id = firstPhotoObject.getString("id");
+                        String secret = firstPhotoObject.getString("secret");
+
+                        String imageURL = "http://farm" + farm + ".static.flickr.com/" + server + "/" + id + "_" + secret + "_m.jpg";
+                    }//end If
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }//end Catch
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+//====================================================================================================================================================================
                 return geoPluginString;
             }//End DoInBackground
-
+// ============================================================================================================================
         @Override
         public  void  onPostExecute( String fetchedString)
         {
             tvClosestCity = (TextView) findViewById(R.id.textViewClosestCity);
             tvClosestCity.setText("Closest City : " + fetchedString);
-
             tvLongitude.setText("Longitude : " + String.format("%.3f", globalLongitude));
             tvLatitude.setText("Latitude : " + String.format("%.3f", globalLatitude));
+
         }//End PostExecute
-        }//End AsyncClass
+    }//End AsyncClass
 }//End Main Activity
