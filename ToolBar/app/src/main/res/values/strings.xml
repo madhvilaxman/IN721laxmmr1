@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ToolBar</string>
+    <string name="emailtext">Email</string>
+    <string name="messagestext">Messages</string>
+    <string name="phonetext">Phone</string>
+    <string name="Check_your_email">You dont have any new Emails</string>
+    <string name="Check_your_messages">You dont have any new messages</string>
+    <string name="Check_your_missedcalls">You didn't miss any calls</string>
+</resources>
