@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GooglePlayServices</string>
+     <string name="GoogleMapDemoKey" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyDyu2sjv-FW-8LIGaUSjUi-faHfL477iUY
+    </string>
+</resources>
